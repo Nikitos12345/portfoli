@@ -33,7 +33,6 @@ class UserModel{
         return $userId;
     }
 
-
     public function Login()
     {
         try {
@@ -51,7 +50,15 @@ class UserModel{
         catch (Auth\TooManyRequestsException $e) {
             $this->massage = "too many requests";
         }
+        catch (Auth\EmailOrUsernameRequiredError $e){
+            $this->massage = "Ошибка, повторите авторизацию";
+        }
         return true;
+    }
+
+    public function AuthCheck()
+    {
+        return $this->auth->isLoggedIn();
     }
 
     public function Logout()

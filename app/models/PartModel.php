@@ -15,10 +15,11 @@ class PartModel
      * @var Engine
      */
     private $engine;
+
     /**
-     * @var \PDO
+     * @var QueryModel
      */
-    private $db;
+    private $query;
 
     function __construct(Engine $engine, QueryModel $query)
     {

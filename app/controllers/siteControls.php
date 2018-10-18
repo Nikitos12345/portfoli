@@ -4,9 +4,8 @@ use League\Plates\Engine;
 use App\models\UserModel;
 use App\models\PartModel;
 
-class siteControls
+class siteControls extends AppController
 {
-    private $engine;
     private $user;
     /**
      * @var PartModel
@@ -15,10 +14,11 @@ class siteControls
 
     function __construct(Engine $engine, UserModel $user, PartModel $parts)
     {
-        $this->engine = $engine;
+        parent::__construct($engine);
         $this->user = $user;
         $this->parts = $parts;
-        $this->engine->addFolder('parts', '../app/views/parts');
+
+
     }
 
     public function index()
@@ -27,34 +27,9 @@ class siteControls
         echo $this->engine->render('layout', compact("parts"));
     }
 
-    public function register()
-    {
-        echo $this->engine->render('register');
-    }
-
-    public function newUser()
-    {
-        $id = $this->user->addUser();
-        echo $this->engine->render('register', ["UserId" => $id]);
-    }
-
-    public function Login()
+    public function admin()
     {
         echo $this->engine->render('login');
-    }
-
-    public function AdminPanel($user)
-    {
-        if($this->user->Login($user)){
-            echo $this->engine->render('admin');
-        }
-        else $this->user->Error();
-    }
-
-    public function Logout()
-    {
-        $this->user->Logout();
-        header("Location: /");
     }
 
     public function test()

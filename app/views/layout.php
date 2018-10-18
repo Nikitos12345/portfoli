@@ -1,8 +1,4 @@
 <!doctype html>
-
-<?php
-
-?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,7 +12,7 @@
     <title>Document</title>
 </head>
 <body>
-<wrapper>
+<div class="wrapper">
     <header>
         <div class="container">
             <div class="row align-items-center">
@@ -35,13 +31,14 @@
             </div>
         </div>
     </header>
-    <section>
-<!--        --><?//=$this->section('content')?>
-    <?php foreach ($parts as $part){
-        $this->insert("parts::".$part);
-    } ?>
-    </section>
-</wrapper>
+    <?php
+    if(isset($parts)){
+        foreach ($parts as $part){
+            $this->insert("parts::".$part);
+        }
+    } else $this->section('content');
+    ?>
+</div>
 <footer>
     <div class="container">
         <div class="row justify-content-end">
