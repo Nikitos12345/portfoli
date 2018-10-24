@@ -12,7 +12,7 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
     $r->addRoute('GET', '/', ['App\controllers\siteControls', "index"]);
     $r->addGroup('/admin', function (RouteCollector $r) {
         $r->addRoute('GET', '/', ['App\controllers\AdminController', "index"]);
-        $r->addRoute(['GET', 'POST'],'/users', ['App\controllers\AdminController', "showALlUsers"]);
+        $r->addRoute(['GET', 'POST'],'/users', ['App\controllers\AdminController', "showAllUsers"]);
         $r->get('/users/delete/{id}', ['App\controllers\AdminController', "deleteUser"]);
         $r->get('/users/show/{id}', ['App\controllers\AdminController', "showUser"]);
 //        $r->post('/users/adduser', ['App\controllers\AdminController', "addUser"]);

@@ -10,14 +10,14 @@
 <div class="callout callout-info">
     <h4 style="text-transform: uppercase;">Success</h4>
 
-    <p style="text-transform: capitalize;"><?= $massage ?>/p>
+    <p style="text-transform: capitalize;"><?= $massage ?></p>
 </div>
 <?php endif; ?>
 <?php if(isset($error)): ?>
     <div class="callout callout-danger">
         <h4 style="text-transform: uppercase;">Warning!</h4>
 
-        <p style="text-transform: capitalize;"><?= $error ?>></p>
+        <p style="text-transform: capitalize;"><?= $error ?></p>
     </div>
 <?php endif; ?>
 <h1>All Users</h1>
@@ -73,7 +73,7 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
-                    <button name="adduser" type="submit" class="btn btn-info">Add user</button>
+                    <input name="addUser" type="submit" class="btn btn-info" value="Add user">
                 </div>
                 <!-- /.box-footer -->
             </form>

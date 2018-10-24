@@ -25,7 +25,7 @@
                                     </select>
                                 </div>
                             <?php else: ?>
-                            <label class="col-sm-4 "> <?= $key.': '?></label>
+                            <label class="col-sm-4 "> <?= $userColumn[$key].': '?></label>
                             <div class="col-sm-8">
                                 <?= $item?>
                             </div>

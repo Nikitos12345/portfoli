@@ -25,17 +25,20 @@ class adminController extends AppController
 
     public function index()
     {
+        $this->checkAuth();
         echo $this->engine->render('admin::index');
     }
 
     public function showAllUsers()
     {
+        $this->checkAuth();
         if ($_POST['addUser']){
             if($this->admin->addUser()){
-                $massage = $error = $this->admin->getError();
+                $massage = $this->admin->getError();
                 $name = 'massage';
             }
             else {
+                $error = $this->admin->getError();
                 $name = 'error';
             }
         }
@@ -45,12 +48,14 @@ class adminController extends AppController
 
     public function deleteUser($id)
     {
+        $this->checkAuth();
         $this->admin->deleteUser($id);
         header('Location:/admin/users');
     }
 
     public function addUser()
     {
+        $this->checkAuth();
         if($this->admin->addUser()){
             header('Location:/admin/users');
         } else {}
@@ -58,12 +63,15 @@ class adminController extends AppController
 
     public function showUser($id)
     {
+        $this->checkAuth();
         $user = $this->admin->showUser($id);
-        echo $this->engine->render('admin::user', compact('user'));
+        $userColumn = $this->admin->getUserColumnName(array_keys($user));
+        echo $this->engine->render('admin::user', compact('user', 'userColumn'));
     }
 
     public function updateUser($id)
     {
+        $this->checkAuth();
         $this->admin->removeRoles($id);
         switch ($_POST['rotes']){
             case 'ADMIN':
@@ -77,6 +85,13 @@ class adminController extends AppController
             $this->admin->updateUserPassword($id);
         }
         header('Location:/admin/users');
+    }
+
+    public function checkAuth()
+    {
+        if (!$this->admin->AuthCheck()){
+            header("Location:/admin");
+        }
     }
 
 }
