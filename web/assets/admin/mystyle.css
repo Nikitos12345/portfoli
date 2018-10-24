@@ -1,0 +1,13 @@
+.my-admin-name{
+    color: #fff;
+    padding: 10px 20px;
+    display: block;
+}
+
+.sidebar-collapse .my-admin-name{
+    display: none;
+}
+.logout a{
+    border: 0;
+    height: 50px;
+}

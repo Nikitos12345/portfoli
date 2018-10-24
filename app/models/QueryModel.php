@@ -26,10 +26,10 @@ class QueryModel
         $this->queryFactory = $queryFactory;
     }
 
-    public function getAll($table)
+    public function getAll($table, $cols = ['*'])
     {
         $select = $this->queryFactory->newSelect();
-        $select->cols(['*']);
+        $select->cols($cols);
         $select->from($table);
         $sth = $this->db->prepare($select->getStatement());
         $sth->execute($select->getBindValues());
@@ -45,6 +45,17 @@ class QueryModel
             ->bindValues($value);
         $sth = $this->db->prepare($insert->getStatement());
         $sth->execute($insert->getBindValues());
+    }
+
+    public function getOne($table, $value, $cols = ['*'])
+    {
+        $select = $this->queryFactory->newSelect();
+        $select->cols($cols);
+        $select->from($table)
+            ->where(key($value).' = '.current($value));
+        $sth = $this->db->prepare($select->getStatement());
+        $sth->execute($select->getBindValues());
+        return $sth->fetch(\PDO::FETCH_ASSOC);
     }
 
 }

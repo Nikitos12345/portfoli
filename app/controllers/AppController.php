@@ -16,12 +16,13 @@ abstract class AppController
      */
     protected $engine;
 
-    public function __construct(Engine $engine)
+    public function __construct()
     {
-
-        $this->engine = $engine;
+        $this->engine = new Engine("../app/views");
         $this->engine->addFolder("admin", "../app/views/admin");
         $this->engine->addFolder('parts', '../app/views/parts');
+        $this->engine->addFolder('forms', '../app/views/forms');
+//        $this->engine->addFolder('error', '../app/views/error');
     }
 
 }

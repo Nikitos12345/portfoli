@@ -8,7 +8,6 @@
 
 namespace App\controllers;
 use App\models\UserModel;
-use League\Plates\Engine;
 
 class UserController extends AppController
 {
@@ -17,9 +16,9 @@ class UserController extends AppController
      */
     private $user;
 
-    public function __construct(Engine $engine, UserModel $user)
+    public function __construct( UserModel $user)
     {
-        parent::__construct($engine);
+        parent::__construct();
         $this->user = $user;
     }
 
@@ -34,8 +33,43 @@ class UserController extends AppController
         if ($this->user->AuthCheck()){
             echo $this->engine->render('admin::index');
         }
-        else echo $this->engine->render('admin::login');
+        else {
+            echo $this->engine->render('forms::login');
+        }
 
+    }
+
+    public function resetPassword()
+    {
+        if (isset($_POST['resetPassword'])){
+           if($this->user->initPasswordReset()){
+               header('Location:/');
+           } else {
+               $error = $this->user->Error();
+               echo $this->engine->render('forms::resetPassword', compact('error'));
+           }
+        }else echo $this->engine->render("forms::resetPassword");
+    }
+
+    public function VerifyTokenForReset($selector, $token)
+    {
+        if ($this->user->VerifyTokenForReset($selector, $token)){
+            echo $this->engine->render('forms::resetPasswordForm', compact('selector', 'token'));
+        }
+        else {
+            $error = $this->user->Error();
+            echo $this->engine->render('errors', compact('error'));
+        }
+    }
+
+    public function updatePassword()
+    {
+        if ($this->user->updatePassword()){
+            header('Location:/admin');
+        } else {
+            $error = $this->user->Error();
+            echo $this->engine->render('forms::resetPasswordForm', compact('error'));
+        }
     }
 
     public function Login()
@@ -45,7 +79,7 @@ class UserController extends AppController
         }
         else {
             $error = $this->user->Error();
-            echo $this->engine->render('error', compact('error'));
+            echo $this->engine->render('forms::login', compact('error'));
         }
     }
 

@@ -3,7 +3,6 @@ echo "<h1>This is test page</h1>";
 
 echo "<div style='text-align:left;'>";
 use Aura\SqlQuery\QueryFactory;
-use App\models\QueryModel;
 
 $builder = new \DI\ContainerBuilder();
 
@@ -19,31 +18,7 @@ $builder->addDefinitions([
 
 $container = $builder->build();
 
-abstract class App {
-    /**
-     * @var PDO
-     */
-    protected $PDO;
 
-    public function __construct(\PDO $PDO)
-    {
-        $this->PDO = $PDO;
-    }
-}
-
-class newApp extends App{
-
-    public $db;
-
-    public function __construct(PDO $PDO)
-    {
-        parent::__construct($PDO);
-        $this->db = $this->PDO;
-    }
-}
-
-$newApp = $container->get("newApp");
-var_dump($newApp);die;
 //class Query
 //{
 //    /**
