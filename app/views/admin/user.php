@@ -16,19 +16,25 @@
                     <div class="box-body">
                         <?php foreach ($user as $key => $item): ?>
                         <div class="form-group row">
-                            <?php if($key == 'roles_mask'): ?>
+                            <?php if($key == 'Roles'): ?>
                                 <label class="col-sm-4 ">Roles: </label>
                                 <div class="col-sm-8">
                                     <select name="rotes" class="form-control">
-                                        <option <?= ($user['roles_mask'] != 'ADMIN') ?: 'selected'  ?>>Admin</option>
-                                        <option <?= ($user["roles_mask"] != 'REVIEWER') ?: 'selected' ?>>Reviewer</option>
+                                        <option <?= ($user['Roles'] != 'ADMIN') ?: 'selected'  ?>>Admin</option>
+                                        <option <?= ($user["Roles"] != 'REVIEWER') ?: 'selected' ?>>Reviewer</option>
                                     </select>
                                 </div>
                             <?php else: ?>
-                            <label class="col-sm-4 "> <?= $userColumn[$key].': '?></label>
-                            <div class="col-sm-8">
-                                <?= $item?>
-                            </div>
+                                <label class="col-sm-4 "> <?= ($userColumn[$key]) ?: $key.': '?></label>
+                                <?php if($key == 'enable'): ?>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" name="enable" value="<?= $item ?>">
+                                    </div>
+                                <?php else: ?>
+                                    <div class="col-sm-8">
+                                        <?= $item?>
+                                    </div>
+                                <?php endif; ?>
                             <?php endif; ?>
                         </div>
                         <?php endforeach; ?>

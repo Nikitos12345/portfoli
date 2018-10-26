@@ -6,18 +6,18 @@
  * Time: 12:11
  */
 ?>
-<?php if(isset($massage)): ?>
+<?php if(isset(\App\models\adminModel::$massage)): ?>
 <div class="callout callout-info">
     <h4 style="text-transform: uppercase;">Success</h4>
 
-    <p style="text-transform: capitalize;"><?= $massage ?></p>
+    <p style="text-transform: capitalize;"><?= \App\models\adminModel::$massage ?></p>
 </div>
 <?php endif; ?>
-<?php if(isset($error)): ?>
+<?php if(isset(\App\models\adminModel::$error)): ?>
     <div class="callout callout-danger">
         <h4 style="text-transform: uppercase;">Warning!</h4>
 
-        <p style="text-transform: capitalize;"><?= $error ?></p>
+        <p style="text-transform: capitalize;"><?= \App\models\adminModel::$error ?></p>
     </div>
 <?php endif; ?>
 <h1>All Users</h1>

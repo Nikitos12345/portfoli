@@ -15,16 +15,14 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
         $r->addRoute(['GET', 'POST'],'/users', ['App\controllers\AdminController', "showAllUsers"]);
         $r->get('/users/delete/{id}', ['App\controllers\AdminController', "deleteUser"]);
         $r->get('/users/show/{id}', ['App\controllers\AdminController', "showUser"]);
-//        $r->post('/users/adduser', ['App\controllers\AdminController', "addUser"]);
         $r->post('/users/update/{id}', ['App\controllers\AdminController', "updateUser"]);
 
     });
-    $r->get('/admin', ['App\controllers\UserController', "AuthCheck"]);
-    $r->post("/login", ['App\controllers\UserController', "Login"]);
+    $r->addRoute(['GET', 'POST'], '/admin', ['App\controllers\UserController', "AuthCheck"]);
     $r->addRoute(['GET', 'POST'], '/reset-password', ['App\controllers\UserController', "resetPassword"]);
     $r->get('/verify-email/{selector}/{token}', ['App\controllers\UserController', "VerifyTokenForReset"]);
-    $r->get('/show/layout/{layout}/{group}', ['App\controllers\siteControls', "showLayout"]);
     $r->post('/update-password', ['App\controllers\UserController', "updatePassword"]);
+    $r->get('/show/layout/{layout}/{group}', ['App\controllers\siteControls', "showLayout"]);
     $r->addRoute('GET', '/test', ['App\controllers\siteControls', "test"]);
     $r->addRoute('GET', '/logout', ['App\controllers\UserController', "Logout"]);
 });

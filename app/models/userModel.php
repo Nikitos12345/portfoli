@@ -5,7 +5,8 @@ use Delight\Auth as Auth;
 
 class UserModel{
     private $auth;
-    private $massage;
+    public static $error;
+    public static $massage;
 
     function __construct(\PDO $db)
     {
@@ -20,16 +21,16 @@ class UserModel{
             return $userId;
         }
         catch (Auth\InvalidEmailException $e) {
-            $this->massage = "invalid email address";
+            self::$error = "invalid email address";
         }
         catch (Auth\InvalidPasswordException $e) {
-            $this->massage = "invalid password";
+            self::$error = "invalid password";
         }
         catch (Auth\UserAlreadyExistsException $e) {
-            $this->massage = "user already exists";
+            self::$error = "user already exists";
         }
         catch (Auth\TooManyRequestsException $e) {
-            $this->massage = "too many requests";
+            self::$error = "too many requests";
         }
         return false;
     }
@@ -49,19 +50,19 @@ class UserModel{
             return true;
         }
         catch (Auth\InvalidEmailException $e) {
-            $this->massage = "wrong email address";
+            self::$error = "wrong email address";
         }
         catch (Auth\InvalidPasswordException $e) {
-            $this->massage = "wrong password";
+            self::$error = "wrong password";
         }
         catch (Auth\EmailNotVerifiedException $e) {
-            $this->massage = "email not verified";
+            self::$error = "email not verified";
         }
         catch (Auth\TooManyRequestsException $e) {
-            $this->massage = "too many requests";
+            self::$error = "too many requests";
         }
         catch (Auth\EmailOrUsernameRequiredError $e){
-            $this->massage = "Ошибка, повторите авторизацию";
+            self::$error = "Ошибка, повторите авторизацию";
         }
         return false;
     }
@@ -74,20 +75,21 @@ class UserModel{
                 $url = 'http://site/verify-email/' . \urlencode($selector) . '/' . \urlencode($token);
                 $message = "<p>Reset you password on <a href='$url'>link</a></p>";
                 mail($_POST['email'], $subject, $message);
+                self::$massage = 'A letter with a link sent to your email';
                 return true;
             });
         }
         catch (Auth\InvalidEmailException $e) {
-            $this->massage = 'Invalid email address';
+            self::$error = 'Invalid email address';
         }
         catch (Auth\EmailNotVerifiedException $e) {
-            $this->massage = 'Email not verified';
+            self::$error = 'Email not verified';
         }
         catch (Auth\ResetDisabledException $e) {
-            $this->massage = 'Password reset is disabled';
+            self::$error = 'Password reset is disabled. Contact your administrator.';
         }
         catch (Auth\TooManyRequestsException $e) {
-            $this->massage = 'Too many requests';
+            self::$error = 'Too many requests';
         }
         return false;
     }
@@ -99,16 +101,16 @@ class UserModel{
             return true;
         }
         catch (Auth\InvalidSelectorTokenPairException $e) {
-            $this->massage = 'Invalid token';
+            self::$error = 'Invalid token';
         }
         catch (Auth\TokenExpiredException $e) {
-            $this->massage = 'Token expired';
+            self::$error = 'Token expired';
         }
         catch (Auth\ResetDisabledException $e) {
-            $this->massage = 'Password reset is disabled';
+            self::$error = 'Password reset is disabled';
         }
         catch (Auth\TooManyRequestsException $e) {
-            $this->massage = 'Too many requests';
+            self::$error = 'Too many requests';
         }
         return false;
     }
@@ -120,19 +122,19 @@ class UserModel{
             return true;
         }
         catch (Auth\InvalidSelectorTokenPairException $e) {
-            $this->massage = 'Invalid token';
+            self::$error = 'Invalid token';
         }
         catch (Auth\TokenExpiredException $e) {
-            $this->massage = 'Token expired';
+            self::$error = 'Token expired';
         }
         catch (Auth\ResetDisabledException $e) {
-            $this->massage = 'Password reset is disabled';
+            self::$error = 'Password reset is disabled';
         }
         catch (Auth\InvalidPasswordException $e) {
-            $this->massage = 'Invalid password';
+            self::$error = 'Invalid password';
         }
         catch (Auth\TooManyRequestsException $e) {
-            $this->massage = 'Too many requests';
+            self::$error = 'Too many requests';
         }
         return false;
     }
@@ -147,8 +149,5 @@ class UserModel{
         $this->auth->logOut();
     }
 
-    public function Error()
-    {
-        return $this->massage;
-    }
+
 }

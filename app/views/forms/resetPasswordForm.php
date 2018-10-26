@@ -7,13 +7,13 @@
  * Time: 20:23
  */
 ?>
-<?php if(isset($error)): ?>
+<?php if(isset(\App\models\UserModel::$error)): ?>
 <div class="callout callout-danger">
     <h4 style="text-transform: uppercase;">Warning!</h4>
 
-    <p style="text-transform: capitalize;"><?= $error ?></p>
+    <p style="text-transform: capitalize;"><?= \App\models\UserModel::$error ?></p>
 </div>
-<?php endif; ?>
+<?php else: ?>
 <form action="/update-password" method="post" class="form-horizontal">
     <div class="box-body">
         <div class="form-group">
@@ -31,3 +31,4 @@
         </div>
     </div>
 </form>
+<?php endif; ?>

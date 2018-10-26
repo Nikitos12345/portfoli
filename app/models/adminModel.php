@@ -12,11 +12,14 @@ namespace App\models;
 class adminModel
 {
     private $auth;
-    private $error;
     /**
      * @var QueryModel
      */
     private $query;
+
+    public static $massage = null;
+
+    public static $error = null;
 
     public function __construct(\PDO $PDO, QueryModel $query)
     {
@@ -29,17 +32,17 @@ class adminModel
     {
         try {
            $this->auth->admin()->createUser($_POST['email'], $_POST['password']);
-            $this->error = 'User has create';
+            self::$massage = 'User has create';
             return true;
         }
         catch (\Delight\Auth\InvalidEmailException $e) {
-            $this->error = 'Invalid email address';
+            self::$error = 'Invalid email address';
         }
         catch (\Delight\Auth\InvalidPasswordException $e) {
-            $this->error = 'Invalid password';
+            self::$error = 'Invalid password';
         }
         catch (\Delight\Auth\UserAlreadyExistsException $e) {
-            $this->error = 'User already exists';
+            self::$error = 'User already exists';
         }
         return false;
     }
@@ -48,12 +51,11 @@ class adminModel
     {
         try {
             $this->auth->admin()->deleteUserById($id);
-            return true;
+            self::$massage = 'User was been delete';
         }
         catch (\Delight\Auth\UnknownIdException $e) {
-            $this->error = 'Unknown ID';
+            self::$error = 'Unknown ID';
         }
-        return false;
     }
 
     public function getAllUses()
@@ -73,18 +75,13 @@ class adminModel
         return $users;
     }
 
-    public function getError()
-    {
-        return $this->error;
-    }
-
     public function addAdminRoles($id)
     {
         try {
             $this->auth->admin()->addRoleForUserById($id, \Delight\Auth\Role::ADMIN);
         }
         catch (\Delight\Auth\UnknownIdException $e) {
-            $this->error = 'Unknown user ID';
+            self::$error = 'Unknown user ID';
         }
     }
 
@@ -94,41 +91,56 @@ class adminModel
             $this->auth->admin()->addRoleForUserById($id, \Delight\Auth\Role::REVIEWER);
         }
         catch (\Delight\Auth\UnknownIdException $e) {
-            $this->error = 'Unknown user ID';
+            self::$error = 'Unknown user ID';
         }
     }
 
-    public function showUser($id)
+    public function getUser($id)
     {
+        self::$error = 'this\'s show page';
         $cols = ['id', 'email', 'verified', 'roles_mask', 'registered','last_login'];
         $user = $this->query->getOne('users', ['id' => $id], $cols);
+        $user = $this->reworkUserData($user);
+        $usercol = [
+            'id' => 'User id',
+            'email' => 'E-mail',
+            'verified' => 'Verified',
+            'roles_mask' => 'Roles',
+            'registered' => 'Register Date',
+            'last_login' => 'Last Login'
+        ];
+        foreach ($user as $key => $item){
+            foreach ($usercol as $col => $val){
+                if($key == $col){
+                    $newUser[$val] = $item;
+                }
+            }
+        }
+        return $newUser;
+    }
+
+    private function reworkUserData($user)
+    {
         $user['verified'] = ($user['verified']) ? 'verified' : 'not verified';
         $user['roles_mask'] = $this->checkRoles($user['id']);
         $user['registered'] = date('H:i j/M/y',$user['registered']);
         $user['last_login'] = date('H:i j/M/y', $user['last_login']);
+        $user['enable'] = $this->getPasswordEnable($user['id']);
         return $user;
-    }
-
-    public function getUserColumnName($keys){
-        $newUser = array();
-        $cols = ['User id', 'E-mail', 'Verified', 'Roles', 'Register Date','Last Login'];
-        for($i = 0; $i < count($cols); $i++){
-            $newUser[$keys[$i]] = $cols[$i];
-        }
-        return $newUser;
     }
 
     public function updateUserPassword($id)
     {
         try {
             $this->auth->admin()->changePasswordForUserById($id, $_POST['newPassword']);
+            self::$massage = 'User password was been update';
             return true;
         }
         catch (\Delight\Auth\UnknownIdException $e) {
-            $this->error = 'Unknown ID';
+            self::$error = 'Unknown ID';
         }
         catch (\Delight\Auth\InvalidPasswordException $e) {
-            $this->error = 'Invalid password';
+            self::$error = 'Invalid password';
         }
         return false;
     }
@@ -146,13 +158,39 @@ class adminModel
             $this->auth->admin()->removeRoleForUserById($userId, \Delight\Auth\Role::REVIEWER);
         }
         catch (\Delight\Auth\UnknownIdException $e) {
-           $this->error = 'Unknown user ID';
+           self::$error = 'Unknown user ID';
         }
     }
 
     public function AuthCheck()
     {
         return $this->auth->isLoggedIn();
+    }
+
+    public function setPasswordEnable($id, $value)
+    {
+        $this->query->updateOne('users', ['resettable' => $value], ['id' => $id]);
+    }
+
+    public function getPasswordEnable($id)
+    {
+        $enable = $this->query->getOne('users', ['id' => $id], ['resettable']);
+        return current($enable);
+    }
+
+    public function isAdmin()
+    {
+        return $this->auth->hasRole(\Delight\Auth\Role::ADMIN);
+    }
+
+    public static function getError()
+    {
+        return self::$error;
+    }
+
+    public static function getMassage()
+    {
+        return self::$massage;
     }
 
 }

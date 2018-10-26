@@ -30,6 +30,9 @@ class UserController extends AppController
 
     public function AuthCheck()
     {
+        if (isset($_POST['login'])){
+            $this->user->Login();
+        }
         if ($this->user->AuthCheck()){
             echo $this->engine->render('admin::index');
         }
@@ -41,46 +44,35 @@ class UserController extends AppController
 
     public function resetPassword()
     {
-        if (isset($_POST['resetPassword'])){
-           if($this->user->initPasswordReset()){
-               header('Location:/');
-           } else {
-               $error = $this->user->Error();
-               echo $this->engine->render('forms::resetPassword', compact('error'));
-           }
-        }else echo $this->engine->render("forms::resetPassword");
+        if (!$this->user->AuthCheck()) {
+            if (isset($_POST['resetPassword'])) {
+                if ($this->user->initPasswordReset()) {
+                    echo $this->engine->render('forms::successForm');
+                } else {
+                    echo $this->engine->render('forms::resetPassword');
+                }
+            } else echo $this->engine->render("forms::resetPassword");
+        }
+        else header('Location:/admin');
     }
 
     public function VerifyTokenForReset($selector, $token)
     {
-        if ($this->user->VerifyTokenForReset($selector, $token)){
+        if (!$this->user->AuthCheck()) {
+            $this->user->VerifyTokenForReset($selector, $token);
             echo $this->engine->render('forms::resetPasswordForm', compact('selector', 'token'));
-        }
-        else {
-            $error = $this->user->Error();
-            echo $this->engine->render('errors', compact('error'));
-        }
+        } else header('Location:/admin');
     }
 
     public function updatePassword()
     {
-        if ($this->user->updatePassword()){
-            header('Location:/admin');
-        } else {
-            $error = $this->user->Error();
-            echo $this->engine->render('forms::resetPasswordForm', compact('error'));
-        }
-    }
-
-    public function Login()
-    {
-        if($this->user->Login()){
-            header('Location:/admin');
-        }
-        else {
-            $error = $this->user->Error();
-            echo $this->engine->render('forms::login', compact('error'));
-        }
+        if (!$this->user->AuthCheck()) {
+            if ($this->user->updatePassword()){
+                echo $this->engine->render('forms::successForm');
+            } else {
+                echo $this->engine->render('forms::resetPasswordForm', compact('selector', 'token'));
+            }
+        } else header('Location:/admin');
     }
 
     public function Logout()

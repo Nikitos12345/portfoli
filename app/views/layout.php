@@ -34,6 +34,20 @@
             </div>
         </div>
     </header>
+    <?php if(isset(\App\models\UserModel::$massage)): ?>
+        <div class="callout callout-info">
+            <h4 style="text-transform: uppercase;">Success</h4>
+
+            <p style="text-transform: capitalize;"><?= \App\models\UserModel::$massage ?></p>
+        </div>
+    <?php endif; ?>
+    <?php if(isset(\App\models\UserModel::$error)): ?>
+        <div class="callout callout-danger">
+            <h4 style="text-transform: uppercase;">Warning!</h4>
+
+            <p style="text-transform: capitalize;"><?= \App\models\UserModel::$error ?></p>
+        </div>
+    <?php endif; ?>
     <?php
     if(isset($parts)){
         foreach ($parts as $part){

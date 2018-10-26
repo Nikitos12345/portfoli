@@ -1,12 +1,12 @@
-<?php $this->layout('forms::AuthForm',  ['title' => 'Log in']) ?>
-<?php if(isset($error)): ?>
+<?php $this->layout('forms::AuthForm',  ['title' => 'Log in'])?>
+<?php if(isset(\App\models\UserModel::$error)): ?>
     <div class="callout callout-danger">
         <h4 style="text-transform: uppercase;">Warning!</h4>
 
-        <p style="text-transform: capitalize;"><?= $error ?></p>
+        <p style="text-transform: capitalize;"><?= \App\models\UserModel::$error ?></p>
     </div>
 <?php endif; ?>
-<form action="/login" method="post">
+<form action="/admin" method="post">
     <div class="form-group has-feedback">
         <input type="email" class="form-control" placeholder="Email" name="email">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -25,7 +25,7 @@
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-            <button type="submit" class="btn btn btn-info btn-block btn-flat">Sign In</button>
+            <button type="submit" class="btn btn btn-info btn-block btn-flat" name="login">Sign In</button>
         </div>
         <!-- /.col -->
     </div>

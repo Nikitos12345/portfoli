@@ -58,4 +58,16 @@ class QueryModel
         return $sth->fetch(\PDO::FETCH_ASSOC);
     }
 
+    public function updateOne($table, $var, $where)
+    {
+        $update = $this->queryFactory->newUpdate();
+        $update
+            ->table($table)                  // update this table
+            ->cols([key($var) => ':'.key($var)])
+            ->where(key($where). '= :'.key($where))           // AND WHERE these conditions
+            ->bindValues(array_merge($var, $where));
+        $sth = $this->db->prepare($update->getStatement());
+        $sth->execute($update->getBindValues());
+    }
+
 }

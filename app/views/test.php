@@ -18,6 +18,8 @@ $builder->addDefinitions([
 
 $container = $builder->build();
 
+$test = ['Rous sdfs000' => 'true'];
+var_dump($test);
 
 //class Query
 //{

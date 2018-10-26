@@ -23,71 +23,61 @@ class adminController extends AppController
         $this->admin = $admin;
     }
 
-    public function index()
-    {
-        $this->checkAuth();
-        echo $this->engine->render('admin::index');
-    }
-
     public function showAllUsers()
     {
         $this->checkAuth();
+        $isAdmin = $this->admin->isAdmin();
         if ($_POST['addUser']){
-            if($this->admin->addUser()){
-                $massage = $this->admin->getError();
-                $name = 'massage';
-            }
-            else {
-                $error = $this->admin->getError();
-                $name = 'error';
-            }
+            $this->admin->addUser();
         }
         $users = $this->admin->getAllUses();
-        echo $this->engine->render('admin::users', compact('users', "$name"));
+        echo $this->engine->render('admin::users', compact('users', 'isAdmin'));
     }
 
     public function deleteUser($id)
     {
         $this->checkAuth();
-        $this->admin->deleteUser($id);
+        if ($this->admin->isAdmin()){
+            $this->admin->deleteUser($id);
+        }
         header('Location:/admin/users');
-    }
-
-    public function addUser()
-    {
-        $this->checkAuth();
-        if($this->admin->addUser()){
-            header('Location:/admin/users');
-        } else {}
     }
 
     public function showUser($id)
     {
         $this->checkAuth();
-        $user = $this->admin->showUser($id);
-        $userColumn = $this->admin->getUserColumnName(array_keys($user));
-        echo $this->engine->render('admin::user', compact('user', 'userColumn'));
+        $isAdmin = $this->admin->isAdmin();
+        $user = $this->admin->getUser($id);
+        echo $this->engine->render('admin::user', compact('user', 'isAdmin'));
     }
 
     public function updateUser($id)
     {
         $this->checkAuth();
-        $this->admin->removeRoles($id);
-        switch ($_POST['rotes']){
-            case 'ADMIN':
-                $this->admin->addAdminRoles($id);
-                break;
-            case 'REVIEWER':
-                $this->admin->addVisitorRoles($id);
-                break;
-        }
-        if (isset($_POST['newPassword'])){
-            $this->admin->updateUserPassword($id);
+        if ($this->admin->isAdmin()) {
+            if (isset($_POST)){
+                if (isset($_POST['enable'])) {
+                    $this->admin->setPasswordEnable($id, $_POST['enable']);
+                }
+                switch ($_POST['rotes']) {
+                    case 'ADMIN':
+                        $this->admin->removeRoles($id);
+                        $this->admin->addAdminRoles($id);
+                        break;
+                    case 'REVIEWER':
+                        $this->admin->removeRoles($id);
+                        $this->admin->addVisitorRoles($id);
+                        break;
+                }
+                if (isset($_POST['newPassword'])) {
+                    $this->admin->updateUserPassword($id);
+                }
+            }
         }
         header('Location:/admin/users');
     }
 
-    public function checkAuth()
+    private function checkAuth()
     {
         if (!$this->admin->AuthCheck()){
             header("Location:/admin");
