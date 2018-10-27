@@ -7,17 +7,17 @@
  */
 
 namespace App\controllers;
-use App\models\adminModel;
+use App\models\userModel;
 
-class adminController extends AppController
+class userController extends AppController
 {
 
     /**
-     * @var adminModel
+     * @var userModel
      */
     private $admin;
 
-    public function __construct(adminModel $admin)
+    public function __construct(userModel $admin)
     {
         parent::__construct();
         $this->admin = $admin;
@@ -28,7 +28,7 @@ class adminController extends AppController
         $this->checkAuth();
         $isAdmin = $this->admin->isAdmin();
         $users = $this->admin->getAllUses();
-        echo $this->engine->render('admin::users', compact('users', 'isAdmin'));
+        echo $this->engine->render('users::users', compact('users', 'isAdmin'));
     }
 
     public function addUser()
@@ -36,7 +36,7 @@ class adminController extends AppController
         $this->checkAuth();
         $this->admin->addUser();
         $users = $this->admin->getAllUses();
-        echo $this->engine->render('admin::users', compact('users', 'isAdmin'));
+        echo $this->engine->render('users::users', compact('users', 'isAdmin'));
     }
 
     public function deleteUser($id)
@@ -53,7 +53,7 @@ class adminController extends AppController
         $this->checkAuth();
         $isAdmin = $this->admin->isAdmin();
         $user = $this->admin->getUser($id);
-        echo $this->engine->render('admin::user', compact('user', 'isAdmin'));
+        echo $this->engine->render('users::user', compact('user', 'isAdmin'));
     }
 
     public function updateUser($id)

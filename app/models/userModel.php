@@ -9,7 +9,7 @@
 namespace App\models;
 
 
-class adminModel
+class userModel
 {
     private $auth;
     /**

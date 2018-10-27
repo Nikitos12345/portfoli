@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="http://site/assets/admin/bower_components/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://site/assets/admin/dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="http://site/assets/admin/dist/css/skins/_all-skins.min.css">
+    <?php if (isset($edit)): ?>
+        <link rel="stylesheet" href="http://site/assets/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <?php endif; ?>
     <link rel="stylesheet" href="http://site/assets/admin/mystyle.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -54,8 +57,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="http://site/admin/users">
-                        <i class="fa fa-users"></i> <span>Users</span>
+                    <a href="http://site/admin/editor">
+                        <i class="fa fa-users"></i> <span>Editor</span>
                     </a>
                 </li>
             </ul>
@@ -68,11 +71,18 @@
     </div>
 </div>
 <script src="http://site/assets/admin/bower_components/jquery/dist/jquery.min.js"></script>
-
-
 <script src="http://site/assets/admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
 <script src="http://site/assets/admin/dist/js/adminlte.min.js"></script>
+
+<?php if (isset($edit)): ?>
+    <script src="http://site/assets/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+    <script>
+        $(function () {
+            //bootstrap WYSIHTML5 - text editor
+            $('.textarea').wysihtml5()
+        })
+    </script>
+<?php endif; ?>
 
 </body>
 </html>
