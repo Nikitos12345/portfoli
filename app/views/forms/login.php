@@ -1,14 +1,14 @@
 <?php $this->layout('forms::AuthForm',  ['title' => 'Log in'])?>
-<?php if(isset(\App\models\UserModel::$error)): ?>
+<?php if(isset(\App\models\authModel::$error)): ?>
     <div class="callout callout-danger">
         <h4 style="text-transform: uppercase;">Warning!</h4>
 
-        <p style="text-transform: capitalize;"><?= \App\models\UserModel::$error ?></p>
+        <p style="text-transform: capitalize;"><?= \App\models\authModel::$error ?></p>
     </div>
 <?php endif; ?>
 <form action="/admin" method="post">
     <div class="form-group has-feedback">
-        <input type="email" class="form-control" placeholder="Email" name="email">
+        <input type="text" class="form-control" placeholder="Username" name="username">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
     </div>
     <div class="form-group has-feedback">

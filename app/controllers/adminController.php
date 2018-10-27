@@ -27,9 +27,14 @@ class adminController extends AppController
     {
         $this->checkAuth();
         $isAdmin = $this->admin->isAdmin();
-        if ($_POST['addUser']){
-            $this->admin->addUser();
-        }
+        $users = $this->admin->getAllUses();
+        echo $this->engine->render('admin::users', compact('users', 'isAdmin'));
+    }
+
+    public function addUser()
+    {
+        $this->checkAuth();
+        $this->admin->addUser();
         $users = $this->admin->getAllUses();
         echo $this->engine->render('admin::users', compact('users', 'isAdmin'));
     }

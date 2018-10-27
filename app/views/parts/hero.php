@@ -1,7 +1,7 @@
 <section>
     <div class="hero">
         <div>
-            <h1>Lorem ipsum dolor.</h1>
+            <h1><?= $content['header'] ?></h1>
             <button class="btn-red">lorem</button>
         </div>
     </div>

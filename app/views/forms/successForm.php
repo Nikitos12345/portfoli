@@ -9,6 +9,6 @@ $this->layout('forms::AuthForm',  ['title' => 'Success']); ?>
 <div class="callout callout-danger">
     <h4 style="text-transform: uppercase;">Warning!</h4>
 
-    <p style="text-transform: capitalize;"><?= \App\models\UserModel::$massage ?></p>
+    <p style="text-transform: capitalize;"><?= \App\models\authModel::$massage ?></p>
     <a href="/" class="btn btn-success">Return to homepage</a>
 </div>

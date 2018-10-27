@@ -1,9 +1,9 @@
 <?php $this->layout('forms::AuthForm',  ['title' => 'Reset Password']); ?>
-<?php if(isset(\App\models\UserModel::$error)): ?>
+<?php if(isset(\App\models\authModel::$error)): ?>
     <div class="callout callout-danger">
         <h4 style="text-transform: uppercase;">Warning!</h4>
 
-        <p style="text-transform: capitalize;"><?= \App\models\UserModel::$error ?></p>
+        <p style="text-transform: capitalize;"><?= \App\models\authModel::$error ?></p>
     </div>
 <?php endif; ?>
 <form method="post" action="/reset-password" class="form-horizontal">

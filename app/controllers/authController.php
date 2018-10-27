@@ -7,16 +7,16 @@
  */
 
 namespace App\controllers;
-use App\models\UserModel;
+use App\models\authModel;
 
-class UserController extends AppController
+class authController extends AppController
 {
     /**
-     * @var UserModel
+     * @var authModel
      */
     private $user;
 
-    public function __construct( UserModel $user)
+    public function __construct( authModel $user)
     {
         parent::__construct();
         $this->user = $user;

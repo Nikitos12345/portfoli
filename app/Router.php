@@ -11,20 +11,26 @@ use FastRoute\RouteCollector;
 $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
     $r->addRoute('GET', '/', ['App\controllers\siteControls', "index"]);
     $r->addGroup('/admin', function (RouteCollector $r) {
-        $r->addRoute('GET', '/', ['App\controllers\AdminController', "index"]);
-        $r->addRoute(['GET', 'POST'],'/users', ['App\controllers\AdminController', "showAllUsers"]);
-        $r->get('/users/delete/{id}', ['App\controllers\AdminController', "deleteUser"]);
-        $r->get('/users/show/{id}', ['App\controllers\AdminController', "showUser"]);
-        $r->post('/users/update/{id}', ['App\controllers\AdminController', "updateUser"]);
+        $r->get('/', ['App\controllers\AdminController', "index"]);
+        $r->addGroup('/users', function (RouteCollector $r) {
+            $r->get('/', ['App\controllers\AdminController', "showAllUsers"]);
+            $r->get('/delete/{id}', ['App\controllers\AdminController', "deleteUser"]);
+            $r->get('/show/{id}', ['App\controllers\AdminController', "showUser"]);
+            $r->post('/', ['App\controllers\AdminController', "addUser"]);
+            $r->post('/update/{id}', ['App\controllers\AdminController', "updateUser"]);
+        });
+        $r->addGroup('/edit', function (RouteCollector $r){
+            $r->get('/', ['App\controllers\AdminController', "updateUser"]);
+        });
 
     });
-    $r->addRoute(['GET', 'POST'], '/admin', ['App\controllers\UserController', "AuthCheck"]);
-    $r->addRoute(['GET', 'POST'], '/reset-password', ['App\controllers\UserController', "resetPassword"]);
-    $r->get('/verify-email/{selector}/{token}', ['App\controllers\UserController', "VerifyTokenForReset"]);
-    $r->post('/update-password', ['App\controllers\UserController', "updatePassword"]);
+    $r->addRoute(['GET', 'POST'], '/admin', ['App\controllers\authController', "AuthCheck"]);
+    $r->addRoute(['GET', 'POST'], '/reset-password', ['App\controllers\authController', "resetPassword"]);
+    $r->get('/verify-email/{selector}/{token}', ['App\controllers\authController', "VerifyTokenForReset"]);
+    $r->post('/update-password', ['App\controllers\authController', "updatePassword"]);
     $r->get('/show/layout/{layout}/{group}', ['App\controllers\siteControls', "showLayout"]);
     $r->addRoute('GET', '/test', ['App\controllers\siteControls', "test"]);
-    $r->addRoute('GET', '/logout', ['App\controllers\UserController', "Logout"]);
+    $r->addRoute('GET', '/logout', ['App\controllers\authController', "Logout"]);
 });
 
 $httpMethod = $_SERVER['REQUEST_METHOD'];

@@ -32,52 +32,26 @@ class PartModel
         $parts = $this->dbAllParts();
         $newParts = array();
         foreach ($parts as $part){
-            $newParts[$part['turn']] = $part['page_name'];
+            $newParts[$part['id']] = $part['page_name'];
         }
         ksort($newParts);
         return $newParts;
     }
 
-    private function getDirParts()
-    {
-        $parts = $this->RenameFile(scandir($_SERVER['DOCUMENT_ROOT'].'/../app/views/parts'));
-        return $parts;
-    }
-
     private function dbAllParts(){
-        return $this->query->getAll("pages");
+        return $this->query->getAll("templates");
     }
 
-    private function dbAddParts()
-    {
-        $partsFolder = $this->getDirParts();
-        $partsDb = $this->dbAllParts();
-        static $i = 0;
-        foreach ($partsFolder as $key => $part){
-            foreach ($partsDb as $arr){
-                if ($part == $arr['page_name']){
-                    unset($partsFolder[$key]);
-                    $i++;
-                    break;
-                }
-            }
-        }
-        unset($part);
-        if (!empty($partsFolder)){
-            foreach ($partsFolder as $part){
-                $this->query->addOne("pages", ['page_name' => $part, 'turn' => $i]);
-                $i++;
-            }
-        }
-    }
 
-    private function RenameFile($array)
+    public function getContent()
     {
-        foreach ($array as $key => &$item){
-            if (preg_match('/(\\w+).php/i', $item)){
-                $item = preg_replace('/(\\w+).php/i', '$1', $item);
-            } else unset($array[$key]);
+        $newContent = array();
+        $content = $this->query->getAll('content', ['temp_id','header', 'text', 'images']);
+        foreach ($content as $array){
+            $newContent[$array['temp_id']] = $array;
+            unset($newContent[$array['temp_id']]['temp_id']);
         }
-        return $array;
-    }
+        return $newContent;
+
+}
 }

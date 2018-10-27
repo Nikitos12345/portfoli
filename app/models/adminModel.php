@@ -31,7 +31,7 @@ class adminModel
     public function addUser()
     {
         try {
-           $this->auth->admin()->createUser($_POST['email'], $_POST['password']);
+           $this->auth->admin()->createUserWithUniqueUsername($_POST['email'], $_POST['password'], $_POST['username']);
             self::$massage = 'User has create';
             return true;
         }
@@ -43,6 +43,9 @@ class adminModel
         }
         catch (\Delight\Auth\UserAlreadyExistsException $e) {
             self::$error = 'User already exists';
+        }
+        catch (\Delight\Auth\DuplicateUsernameException $e) {
+            self::$error = 'Need unique Username';
         }
         return false;
     }
@@ -60,7 +63,7 @@ class adminModel
 
     public function getAllUses()
     {
-        $cols = ['id', 'email', 'verified', 'registered', 'last_login'];
+        $cols = ['id', 'email', 'username', 'verified', 'registered', 'last_login'];
         $users = $this->query->getAll('users', $cols);
         foreach ($users as &$user){
             foreach ($user as $key => &$userdata) {

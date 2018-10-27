@@ -3,7 +3,7 @@ namespace App\models;
 
 use Delight\Auth as Auth;
 
-class UserModel{
+class authModel{
     private $auth;
     public static $error;
     public static $massage;
@@ -46,22 +46,22 @@ class UserModel{
             $rememberDuration = null;
         }
         try {
-            $this->auth->login($_POST['email'], $_POST['password'], $rememberDuration);
+            $this->auth->loginWithUsername($_POST['username'], $_POST['password'], $rememberDuration);
             return true;
         }
-        catch (Auth\InvalidEmailException $e) {
-            self::$error = "wrong email address";
+        catch (Auth\UnknownUsernameException $e) {
+            self::$error = "Wrong username";
         }
         catch (Auth\InvalidPasswordException $e) {
-            self::$error = "wrong password";
+            self::$error = "Wrong password";
         }
         catch (Auth\EmailNotVerifiedException $e) {
-            self::$error = "email not verified";
+            self::$error = "Email not verified";
         }
         catch (Auth\TooManyRequestsException $e) {
-            self::$error = "too many requests";
+            self::$error = "Too many requests";
         }
-        catch (Auth\EmailOrUsernameRequiredError $e){
+        catch (Auth\AmbiguousUsernameException $e){
             self::$error = "Ошибка, повторите авторизацию";
         }
         return false;

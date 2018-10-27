@@ -18,11 +18,11 @@ class siteControls extends AppController
 
     }
 
-    public function index($massage = null)
+    public function index()
     {
         $parts = $this->parts->getAllParts();
-
-        echo $this->engine->render('layout', compact("parts", 'massage'));
+        $content = $this->parts->getContent();
+        echo $this->engine->render('layout', compact("parts", 'content'));
     }
 
     public function NotFound()
