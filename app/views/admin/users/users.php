@@ -42,7 +42,9 @@
                         <?php endforeach; ?>
                         <td>
                             <a href="/admin/users/show/<?= $userdata['id'] ?>"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                            <a style="color: red" href="/admin/users/delete/<?= $userdata['id'] ?>"><i class="fa fa-times" aria-hidden="true"></i></a>
+                            <?php if($isAdmin): ?>
+                                <a style="color: red" href="/admin/users/delete/<?= $userdata['id'] ?>"><i class="fa fa-times" aria-hidden="true"></i></a>
+                            <?php endif; ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -54,7 +56,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Add new user</h3>
             </div>
-            <form method="post" action="/admin/users" class="form-horizontal">
+            <form method="post" action="<?php if($isAdmin) echo '/admin/users'; else echo '';?>" class="form-horizontal">
                 <div class="box-body">
                     <div class="form-group">
                         <label for="inputUsername" class="col-sm-2 control-label">Username</label>

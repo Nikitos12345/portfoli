@@ -33,7 +33,7 @@ $this->layout('admin::index', ['title' => 'Editor']);
                 <a href="/admin/editor/edit/<?= $temp['id'] ?>" class="btn btn-primary btn-lg">Edit</a>
             </div>
         </div>
-        <form action="/admin/editor/update-parts" method="post">
+        <form action="<?php if ($isAdmin) echo '/admin/editor/update-parts'; else echo ''; ?>" method="post">
             <input name="order" type="hidden" id="parts" value="">
             <input value="Сохранить" type="submit" id="updater" class="btn btn-info btn-lg">
         </form>

@@ -12,7 +12,7 @@
     <div>
         <div class="col-md-4">
             <div class="box box-info" >
-                <form method="post" action="/admin/users/update/<?= $user['id'] ?>" class="form-horizontal">
+                <form method="post" action="<?php if($isAdmin) echo '/admin/users/update/'.$user['User id']; else echo '';?>" class="form-horizontal">
                     <div class="box-body">
                         <?php foreach ($user as $key => $item): ?>
                         <div class="form-group row">

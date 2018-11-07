@@ -28,7 +28,7 @@
 <div class="wrapper">
 
     <header class="main-header">
-        <a href="#" class="logo">
+        <a href="/admin" class="logo">
             <span class="logo-mini"><b>A</b>LT</span>
             <span class="logo-lg"><b>Admin</b>LTE</span>
         </a>
@@ -45,7 +45,7 @@
         <section class="sidebar">
             <div class="user-panel">
                 <div class="pull-left my-admin-name">
-                    <p>Alexander Pierce</p>
+                    <p>Hello <?= $_SESSION['auth_username'] ?></p>
                     <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                 </div>
             </div>
