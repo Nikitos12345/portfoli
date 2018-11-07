@@ -7,6 +7,7 @@ namespace Composer\Autoload;
 class ComposerStaticInite69e4e123b7c7d4e4ddd8e6e086fb25a
 {
     public static $files = array (
+        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
         '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
         'b33e3d135e5d9e47d845c576147bda89' => __DIR__ . '/..' . '/php-di/php-di/src/functions.php',
@@ -17,10 +18,16 @@ class ComposerStaticInite69e4e123b7c7d4e4ddd8e6e086fb25a
         array (
             'Symfony\\Polyfill\\Util\\' => 22,
             'Symfony\\Polyfill\\Php56\\' => 23,
+            'Symfony\\Component\\Process\\' => 26,
             'SuperClosure\\' => 13,
+            'Spatie\\TemporaryDirectory\\' => 26,
+            'Spatie\\Image\\' => 13,
+            'Spatie\\ImageOptimizer\\' => 22,
         ),
         'P' => 
         array (
+            'Psr\\Log\\' => 8,
+            'Psr\\Http\\Message\\' => 17,
             'Psr\\Container\\' => 14,
             'PhpParser\\' => 10,
             'PhpDocReader\\' => 13,
@@ -28,10 +35,17 @@ class ComposerStaticInite69e4e123b7c7d4e4ddd8e6e086fb25a
         'L' => 
         array (
             'League\\Plates\\' => 14,
+            'League\\Glide\\' => 13,
+            'League\\Flysystem\\' => 17,
         ),
         'I' => 
         array (
             'Invoker\\' => 8,
+            'Intervention\\Image\\' => 19,
+        ),
+        'G' => 
+        array (
+            'GuzzleHttp\\Psr7\\' => 16,
         ),
         'F' => 
         array (
@@ -62,9 +76,33 @@ class ComposerStaticInite69e4e123b7c7d4e4ddd8e6e086fb25a
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php56',
         ),
+        'Symfony\\Component\\Process\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/process',
+        ),
         'SuperClosure\\' => 
         array (
             0 => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src',
+        ),
+        'Spatie\\TemporaryDirectory\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/spatie/temporary-directory/src',
+        ),
+        'Spatie\\Image\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/spatie/image/src',
+        ),
+        'Spatie\\ImageOptimizer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/spatie/image-optimizer/src',
+        ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
+        'Psr\\Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Container\\' => 
         array (
@@ -82,9 +120,25 @@ class ComposerStaticInite69e4e123b7c7d4e4ddd8e6e086fb25a
         array (
             0 => __DIR__ . '/..' . '/league/plates/src',
         ),
+        'League\\Glide\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/league/glide/src',
+        ),
+        'League\\Flysystem\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/league/flysystem/src',
+        ),
         'Invoker\\' => 
         array (
             0 => __DIR__ . '/..' . '/php-di/invoker/src',
+        ),
+        'Intervention\\Image\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image',
+        ),
+        'GuzzleHttp\\Psr7\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
         ),
         'FastRoute\\' => 
         array (

@@ -71,16 +71,15 @@
     </div>
 </div>
 <script src="http://site/assets/admin/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="http://site/assets/js/jquery-ui.min.js"></script>
 <script src="http://site/assets/admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="http://site/assets/admin/dist/js/adminlte.min.js"></script>
+<script src="http://site/assets/js/admin-script.js"></script>
 
 <?php if (isset($edit)): ?>
     <script src="http://site/assets/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
     <script>
-        $(function () {
-            //bootstrap WYSIHTML5 - text editor
-            $('.textarea').wysihtml5()
-        })
+        $('.edit-area').wysihtml5();
     </script>
 <?php endif; ?>
 

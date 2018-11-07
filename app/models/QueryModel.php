@@ -11,6 +11,7 @@ use Aura\SqlQuery\QueryFactory;
 
 class QueryModel
 {
+    private $error;
     /**
      * @var QueryFactory
      */
@@ -68,6 +69,12 @@ class QueryModel
             ->bindValues(array_merge($var, $where));
         $sth = $this->db->prepare($update->getStatement());
         $sth->execute($update->getBindValues());
+        $this->error = $sth->errorInfo();
+    }
+
+    public function getError()
+    {
+        var_dump($this->error);die;
     }
 
 }

@@ -9,25 +9,35 @@ $this->layout('admin::index', ['title' => 'Edit', 'edit' => true]); ?>
 
 <div class="box">
     <div class="box-header">
-        <h3 class="box-title">Bootstrap WYSIHTML5
-            <small>Simple and fast</small>
-        </h3>
-        <!-- tools box -->
-<!--        <div class="pull-right box-tools">-->
-<!--            <button type="button" class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip"-->
-<!--                    title="Collapse">-->
-<!--                <i class="fa fa-minus"></i></button>-->
-<!--            <button type="button" class="btn btn-default btn-sm" data-widget="remove" data-toggle="tooltip"-->
-<!--                    title="Remove">-->
-<!--                <i class="fa fa-times"></i></button>-->
-<!--        </div>-->
-        <!-- /. tools -->
+        <h3 class="box-title">Edit '<?= $template['name'] ?>' template</h3>
     </div>
-    <!-- /.box-header -->
     <div class="box-body pad">
-        <form>
-                <textarea class="textarea" placeholder="Place some text here"
-                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+        <form method="post" action="/admin/editor/update/<?= $template['id'] ?>">
+            <div class="row">
+<!--                --><?php //var_dump($template) ?>
+
+                <?php foreach ($template['options'] as $option): ?>
+                    <?php if (preg_match('/head[0-9]/', $option)): ?>
+                    <div class="col-md-12">
+                        <input class="edit-header" name="<?= $option ?>" value="<?= $template['content'][$option] ?>" >
+                    </div>
+                    <?php endif; ?>
+                    <?php if (preg_match('/text[0-9]/', $option)): ?>
+                    <div class="col-md-6">
+                        <textarea name="<?= $option ?>" class="edit-area edit-content"><?= $template['content'][$option] ?></textarea>
+                    </div>
+                    <?php endif; ?>
+                    <?php if (preg_match('/btn[0-9]/', $option)): ?>
+                    <div class="col-md-12">
+                        <lable>Изменить текст кнопки: </lable>
+                        <input class="edit-btn" type="text" name="<?= $option ?>" value="<?= $template['content'][$option] ?>">
+                    </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+
+            </div>
+            <input type="hidden" name="options" value="<?= implode(',',$template['options']) ?>">
+            <input type="submit"  class="btn btn-primary" value="Update template">
         </form>
     </div>
 </div>

@@ -21,8 +21,7 @@ class siteControls extends AppController
     public function index()
     {
         $parts = $this->parts->getAllParts();
-        $content = $this->parts->getContent();
-        echo $this->engine->render('layout', compact("parts", 'content'));
+        echo $this->engine->render('layout', compact("parts"));
     }
 
     public function NotFound()

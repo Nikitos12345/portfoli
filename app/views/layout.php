@@ -22,7 +22,7 @@
                     <div class="col-md-12 col-lg-6 text-center">
                         <nav>
                             <ul id="topmenu" class="nav">
-                                <li class="active nav-item"><a href="#" class="nav-link" data-scroll>Home</a></li>
+                                <li class="active nav-item"><a href="#topmenu" class="nav-link" data-scroll>Home</a></li>
                                 <li class="nav-item"><a href="#service" class="nav-link" data-scroll>Service</a></li>
                                 <li class="nav-item"><a href="#portfolio" class="nav-link" data-scroll>Portfolio</a></li>
                                 <li class="nav-item"><a href="#about" class="nav-link" data-scroll>About</a></li>
@@ -35,11 +35,9 @@
         </div>
     </header>
     <?php
-    if(isset($parts)){
         foreach ($parts as $key => $part){
-            $this->insert("parts::".$part, ['content' => $content[$key]]);
+            $this->insert("parts::".$part['name'], ['content' => $part['content']]);
         }
-    } else $this->section('content');
     ?>
 </div>
 <footer>

@@ -36,4 +36,16 @@ class editorController extends AppController
         echo $this->engine->render('editor::edit', compact('template'));
     }
 
+    public function updateTemplate($id)
+    {
+        $this->editor->updateTemp($id);
+        header("Location:/admin/editor");
+    }
+
+    public function updateTemplatesOrder()
+    {
+        $this->editor->updateTemplatesOrder();
+        header("Location:/admin/editor");
+    }
+
 }

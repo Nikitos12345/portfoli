@@ -21,7 +21,10 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
         });
         $r->addGroup('/editor', function (RouteCollector $r){
             $r->get('', ['App\controllers\editorController', "getAllTemp"]);
+            $r->get('/show/{id}', ['App\controllers\editorController', "showOne"]);
             $r->addRoute('GET', '/edit/{id}', ['App\controllers\editorController', "editTemplate"]);
+            $r->post('/update/{id}', ['App\controllers\editorController', "updateTemplate"]);
+            $r->post('/update-parts', ['App\controllers\editorController', "updateTemplatesOrder"]);
         });
 
     });
