@@ -18,18 +18,20 @@ $this->layout('admin::index', ['title' => 'Edit', 'edit' => true]); ?>
 
                 <?php foreach ($template['options'] as $option): ?>
                     <?php if (preg_match('/head[0-9]/', $option)): ?>
-                    <div class="col-md-12">
+                    <div class="col-md-12 edit-marg">
+                        <lable class="h3">Изменить Заголовок: </lable>
                         <input class="edit-header" name="<?= $option ?>" value="<?= $template['content'][$option] ?>" >
                     </div>
                     <?php endif; ?>
                     <?php if (preg_match('/text[0-9]/', $option)): ?>
-                    <div class="col-md-6">
+                    <div class="col-md-12 edit-marg">
+                        <lable class="h3">Изменить текст: </lable>
                         <textarea name="<?= $option ?>" class="edit-area edit-content"><?= $template['content'][$option] ?></textarea>
                     </div>
                     <?php endif; ?>
                     <?php if (preg_match('/btn[0-9]/', $option)): ?>
-                    <div class="col-md-12">
-                        <lable>Изменить текст кнопки: </lable>
+                    <div class="col-md-12 edit-marg">
+                        <lable class="h3">Изменить текст кнопки: </lable>
                         <input class="edit-btn" type="text" name="<?= $option ?>" value="<?= $template['content'][$option] ?>">
                     </div>
                     <?php endif; ?>

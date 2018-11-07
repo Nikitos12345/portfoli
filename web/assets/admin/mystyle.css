@@ -1,9 +1,10 @@
+/* admin header*/
 .my-admin-name{
     color: #fff;
     padding: 10px 20px;
     display: block;
 }
-
+/* admin edit templates*/
 .sidebar-collapse .my-admin-name{
     display: none;
 }
@@ -11,9 +12,7 @@
     border: 0;
     height: 50px;
 }
-.edit-area{
 
-}
 .edit-header {
     width: 100%;
     height: 50px;
@@ -41,6 +40,11 @@
     background-color: #f4f4f4;
     color: #444;
 }
+.edit-marg{
+    margin-bottom: 20px;
+}
+
+/* admin editor*/
 #templates, .stable-block{
     position: relative;
     list-style: none;
@@ -52,6 +56,7 @@
     position: relative;
     text-align: center;
     width: 100%;
+    box-sizing: border-box;
 }
 #templates li img, .stable-block img{
     width: 100%;
@@ -60,7 +65,7 @@
 #templates li .links{
     display: none;
     position: absolute;
-    top: 50%;
+    top: 45%;
     left: 40%;
 }
 .stable-block .links{
@@ -69,6 +74,21 @@
     top: 0;
     left: 40%;
 }
+#templates .links a, .stable-block .links a{
+    padding: 10px 40px;
+}
+.stable-block.sb-footer .links{
+    top: 45%;
+}
+#templates li:hover{
+    border: 1px solid black;
+
+}
 #templates li:hover .links, .stable-block:hover .links{
     display: block;
+}
+#updater {
+    position: fixed;
+    right: 20px;
+    bottom: 50px;
 }

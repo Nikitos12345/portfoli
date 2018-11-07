@@ -14,8 +14,7 @@ $this->layout('admin::index', ['title' => 'Editor']);
         <div class="stable-block">
             <img src="http://site/assets/admin/img/header.jpg" alt="">
             <div class="links">
-                <a href="/admin/editor/edit/<?= $temp['id'] ?>" class="btn btn-primary">Edit</a>
-                <a href="/admin/editor/show/<?= $temp['id'] ?>" class="btn btn-success">show</a>
+                <a href="/admin/editor/edit/<?= $temp['id'] ?>" class="btn btn-primary btn-lg">Edit</a>
             </div>
         </div>
         <ul id="templates">
@@ -23,22 +22,20 @@ $this->layout('admin::index', ['title' => 'Editor']);
                 <li data-name = "<?= $temp['name'] ?>">
                     <img src="http://site/assets/admin/img/<?= $temp['image']?>" alt="">
                     <div class="links">
-                        <a href="/admin/editor/edit/<?= $temp['id'] ?>" class="btn btn-primary">Edit</a>
-                        <a href="/admin/editor/show/<?= $temp['id'] ?>" class="btn btn-success">show</a>
+                        <a href="/admin/editor/edit/<?= $temp['id'] ?>" class="btn btn-primary btn-lg">Edit</a>
                     </div>
                 </li>
             <?php endforeach; ?>
         </ul>
-        <div class="stable-block">
+        <div class="stable-block sb-footer">
             <img src="http://site/assets/admin/img/footer.jpg" alt="">
             <div class="links">
-                <a href="/admin/editor/edit/<?= $temp['id'] ?>" class="btn btn-primary">Edit</a>
-                <a href="/admin/editor/show/<?= $temp['id'] ?>" class="btn btn-success">show</a>
+                <a href="/admin/editor/edit/<?= $temp['id'] ?>" class="btn btn-primary btn-lg">Edit</a>
             </div>
         </div>
         <form action="/admin/editor/update-parts" method="post">
             <input name="order" type="hidden" id="parts" value="">
-            <input type="submit" id="updater">
+            <input value="Сохранить" type="submit" id="updater" class="btn btn-info btn-lg">
         </form>
     </div>
 </div>

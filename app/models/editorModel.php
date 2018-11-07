@@ -24,10 +24,13 @@ class editorModel
     public function getAllTemp()
     {
         $temps = $this->query->getAll('templates');
-        foreach ($temps as &$temp){
+        $newTemps =[];
+        foreach ($temps as $temp){
             $temp['display'] = ($temp['display']) ? 'true' : 'false';
+            $newTemps[$temp['turn']] = $temp;
         }
-        return $temps;
+        ksort($newTemps);
+        return $newTemps;
     }
 
     public function getOneTemp($id)

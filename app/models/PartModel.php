@@ -32,7 +32,7 @@ class PartModel
         $parts = $this->dbAllParts();
         $newParts = array();
         foreach ($parts as $part){
-            $newParts[$part['id']] = array(
+            $newParts[$part['turn']] = array(
                 'name' => $part['name'],
                 'content' => $this->getTempContent($part['id'])
             );
