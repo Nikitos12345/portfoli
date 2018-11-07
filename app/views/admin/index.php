@@ -66,7 +66,21 @@
     </aside>
     <div class="content-wrapper">
         <section class="content">
-        <?php echo $this->section('content'); ?>
+            <?php if (!empty($this->section('content'))): ?>
+                <?php echo $this->section('content'); ?>
+            <?php else: ?>
+                <h1>Данный проект подготовлен в рамках портфолио</h1>
+                <p>Для разработки применялись следующие пакеты: </p>
+                <ul>
+                    <li><a href="https://packagist.org/packages/nikic/fast-route">nikic/fast-route</a> - для построения роутинга</li>
+                    <li><a href="https://packagist.org/packages/php-di/php-di">php-di/php-di</a> - построение зависимостей</li>
+                    <li><a href="https://packagist.org/packages/league/plates">league/plates</a> - шаблонизатор</li>
+                    <li><a href="https://packagist.org/packages/almasaeed2010/adminlte">almasaeed2010/adminlte</a> - шаблон для админ панели</li>
+                    <li><a href="https://packagist.org/packages/delight-im/auth">delight-im/auth</a> - для построения авторизации</li>
+                    <li><a href="https://packagist.org/packages/aura/sqlquery">aura/sqlquery</a> - менеджер SQL запросов</li>
+                </ul>
+            <h3>Проект еще находится на стадии доработки</h3>
+            <?php endif; ?>
         </section>
     </div>
 </div>
