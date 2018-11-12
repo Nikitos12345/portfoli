@@ -114,10 +114,15 @@ require __DIR__.'/../vendor/autoload.php';
 \testEqual((new \Delight\Cookie\Cookie('key'))->setValue('value')->setDomain('blog.example.com'), 'Set-Cookie: key=value; path=/; domain=.blog.example.com; httponly; SameSite=Lax');
 \testEqual((new \Delight\Cookie\Cookie('key'))->setValue('value')->setDomain('.blog.example.com'), 'Set-Cookie: key=value; path=/; domain=.blog.example.com; httponly; SameSite=Lax');
 
+\testEqual(\Delight\Cookie\Cookie::parse('Set-Cookie: SID'), '');
+\testEqual(\Delight\Cookie\Cookie::parse('Set-Cookie: SID=31d4d96e407aad42'), 'Set-Cookie: SID=31d4d96e407aad42');
+\testEqual(\Delight\Cookie\Cookie::parse('Set-Cookie: SID=31d4d96e407aad42; path=/; httponly'), 'Set-Cookie: SID=31d4d96e407aad42; path=/; httponly');
+\testEqual(\Delight\Cookie\Cookie::parse('Set-Cookie: SID=31d4d96e407aad42; path=/; httponly; SameSite=Strict'), 'Set-Cookie: SID=31d4d96e407aad42; path=/; httponly; SameSite=Strict');
+
 \setcookie('hello', 'world', \time() + 86400, '/foo/', 'example.com', true, true);
 $cookie = \Delight\Cookie\Cookie::parse(\Delight\Http\ResponseHeader::take('Set-Cookie'));
 
-\testEqual($cookie, (new \Delight\Cookie\Cookie('hello'))->setValue('world')->setMaxAge(86400)->setPath('/foo/')->setDomain('example.com')->setHttpOnly(true)->setSecureOnly(true));
+\testEqual($cookie, (new \Delight\Cookie\Cookie('hello'))->setValue('world')->setMaxAge(86400)->setPath('/foo/')->setDomain('example.com')->setHttpOnly(true)->setSecureOnly(true)->setSameSiteRestriction(null));
 
 ($cookie->getName() === 'hello') or \fail(__LINE__);
 ($cookie->getValue() === 'world') or \fail(__LINE__);
@@ -127,7 +132,7 @@ $cookie = \Delight\Cookie\Cookie::parse(\Delight\Http\ResponseHeader::take('Set-
 ($cookie->getDomain() === '.example.com') or \fail(__LINE__);
 ($cookie->isHttpOnly() === true) or \fail(__LINE__);
 ($cookie->isSecureOnly() === true) or \fail(__LINE__);
-($cookie->getSameSiteRestriction() === \Delight\Cookie\Cookie::SAME_SITE_RESTRICTION_LAX) or \fail(__LINE__);
+($cookie->getSameSiteRestriction() === null) or \fail(__LINE__);
 
 \testEqual(\Delight\Cookie\Cookie::exists('SESSID'), isset($_COOKIE['SESSID']));
 \testEqual(\Delight\Cookie\Cookie::exists('other'), isset($_COOKIE['other']));
@@ -140,55 +145,50 @@ $cookie = \Delight\Cookie\Cookie::parse(\Delight\Http\ResponseHeader::take('Set-
 
 /* BEGIN TEST SESSION */
 
-// enable assertions
-\ini_set('assert.active', 1);
-@\ini_set('zend.assertions', 1);
-\ini_set('assert.exception', 1);
-
-\assert(isset($_SESSION) === false);
-\assert(\Delight\Cookie\Session::id() === '');
+(isset($_SESSION) === false) or \fail(__LINE__);
+(\Delight\Cookie\Session::id() === '') or \fail(__LINE__);
 
 \Delight\Cookie\Session::start();
 
-\assert(isset($_SESSION) === true);
-\assert(\Delight\Cookie\Session::id() !== '');
+(isset($_SESSION) === true) or \fail(__LINE__);
+(\Delight\Cookie\Session::id() !== '') or \fail(__LINE__);
 
 $oldSessionId = \Delight\Cookie\Session::id();
 \Delight\Cookie\Session::regenerate();
-\assert(\Delight\Cookie\Session::id() !== $oldSessionId);
-\assert(\Delight\Cookie\Session::id() !== null);
+(\Delight\Cookie\Session::id() !== $oldSessionId) or \fail(__LINE__);
+(\Delight\Cookie\Session::id() !== null) or \fail(__LINE__);
 
 \session_unset();
 
-\assert(isset($_SESSION['key1']) === false);
-\assert(\Delight\Cookie\Session::has('key1') === false);
-\assert(\Delight\Cookie\Session::get('key1') === null);
-\assert(\Delight\Cookie\Session::get('key1', 5) === 5);
-\assert(\Delight\Cookie\Session::get('key1', 'monkey') === 'monkey');
+(isset($_SESSION['key1']) === false) or \fail(__LINE__);
+(\Delight\Cookie\Session::has('key1') === false) or \fail(__LINE__);
+(\Delight\Cookie\Session::get('key1') === null) or \fail(__LINE__);
+(\Delight\Cookie\Session::get('key1', 5) === 5) or \fail(__LINE__);
+(\Delight\Cookie\Session::get('key1', 'monkey') === 'monkey') or \fail(__LINE__);
 
 \Delight\Cookie\Session::set('key1', 'value1');
 
-\assert(isset($_SESSION['key1']) === true);
-\assert(\Delight\Cookie\Session::has('key1') === true);
-\assert(\Delight\Cookie\Session::get('key1') === 'value1');
-\assert(\Delight\Cookie\Session::get('key1', 5) === 'value1');
-\assert(\Delight\Cookie\Session::get('key1', 'monkey') === 'value1');
+(isset($_SESSION['key1']) === true) or \fail(__LINE__);
+(\Delight\Cookie\Session::has('key1') === true) or \fail(__LINE__);
+(\Delight\Cookie\Session::get('key1') === 'value1') or \fail(__LINE__);
+(\Delight\Cookie\Session::get('key1', 5) === 'value1') or \fail(__LINE__);
+(\Delight\Cookie\Session::get('key1', 'monkey') === 'value1') or \fail(__LINE__);
 
-\assert(\Delight\Cookie\Session::take('key1') === 'value1');
-\assert(\Delight\Cookie\Session::take('key1') === null);
-\assert(\Delight\Cookie\Session::take('key1', 'value2') === 'value2');
-\assert(isset($_SESSION['key1']) === false);
-\assert(\Delight\Cookie\Session::has('key1') === false);
+(\Delight\Cookie\Session::take('key1') === 'value1') or \fail(__LINE__);
+(\Delight\Cookie\Session::take('key1') === null) or \fail(__LINE__);
+(\Delight\Cookie\Session::take('key1', 'value2') === 'value2') or \fail(__LINE__);
+(isset($_SESSION['key1']) === false) or \fail(__LINE__);
+(\Delight\Cookie\Session::has('key1') === false) or \fail(__LINE__);
 
 \Delight\Cookie\Session::set('key2', 'value3');
 
-\assert(isset($_SESSION['key2']) === true);
-\assert(\Delight\Cookie\Session::has('key2') === true);
-\assert(\Delight\Cookie\Session::get('key2', 'value4') === 'value3');
+(isset($_SESSION['key2']) === true) or \fail(__LINE__);
+(\Delight\Cookie\Session::has('key2') === true) or \fail(__LINE__);
+(\Delight\Cookie\Session::get('key2', 'value4') === 'value3') or \fail(__LINE__);
 \Delight\Cookie\Session::delete('key2');
-\assert(\Delight\Cookie\Session::get('key2', 'value4') === 'value4');
-\assert(\Delight\Cookie\Session::get('key2') === null);
-\assert(\Delight\Cookie\Session::has('key2') === false);
+(\Delight\Cookie\Session::get('key2', 'value4') === 'value4') or \fail(__LINE__);
+(\Delight\Cookie\Session::get('key2') === null) or \fail(__LINE__);
+(\Delight\Cookie\Session::has('key2') === false) or \fail(__LINE__);
 
 \session_destroy();
 

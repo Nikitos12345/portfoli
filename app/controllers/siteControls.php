@@ -24,22 +24,5 @@ class siteControls extends AppController
         echo $this->engine->render('layout', compact("parts"));
     }
 
-    public function NotFound()
-    {
-        echo $this->engine->render('error::n');
-    }
-
-    public function test()
-    {
-        echo $this->engine->render('test');
-    }
-
-    public function showLayout($layout, $group = null)
-    {
-        if(isset($group)){
-            $group .= '::';
-            echo $this->engine->render($group.$layout);
-        } else echo $this->engine->render($layout);
-    }
     
 }

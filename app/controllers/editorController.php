@@ -55,11 +55,12 @@ class editorController extends AppController
     public function updateTemplatesOrder()
     {
         $this->editor->updateTemplatesOrder();
-        header("Location:/admin/editor");
+
     }
+
     private function checkAuth()
     {
-        if (!$this->user->AuthCheck()){
+        if (!$this->user->AuthCheck()) {
             header("Location:/admin");
         }
     }

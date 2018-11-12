@@ -48,7 +48,7 @@ class QueryModel
         $sth->execute($insert->getBindValues());
     }
 
-    public function getOne(string $table, array $value, array $cols = ['*'])
+    public function getOne($table, array $value, array $cols = ['*'])
     {
         $select = $this->queryFactory->newSelect();
         $select->cols($cols);

@@ -378,15 +378,16 @@ final class Cookie {
 		}
 
 		if (\preg_match('/^' . self::HEADER_PREFIX . '(.*?)=(.*?)(?:; (.*?))?$/i', $cookieHeader, $matches)) {
+			$cookie = new self($matches[1]);
+			$cookie->setPath(null);
+			$cookie->setHttpOnly(false);
+			$cookie->setValue(
+				\urldecode($matches[2])
+			);
+			$cookie->setSameSiteRestriction(null);
+
 			if (\count($matches) >= 4) {
 				$attributes = \explode('; ', $matches[3]);
-
-				$cookie = new self($matches[1]);
-				$cookie->setPath(null);
-				$cookie->setHttpOnly(false);
-				$cookie->setValue(
-					\urldecode($matches[2])
-				);
 
 				foreach ($attributes as $attribute) {
 					if (\strcasecmp($attribute, 'HttpOnly') === 0) {
@@ -404,13 +405,13 @@ final class Cookie {
 					elseif (\stripos($attribute, 'Path=') === 0) {
 						$cookie->setPath(\substr($attribute, 5));
 					}
+					elseif (\stripos($attribute, 'SameSite=') === 0) {
+						$cookie->setSameSiteRestriction(\substr($attribute, 9));
+					}
 				}
+			}
 
-				return $cookie;
-			}
-			else {
-				return null;
-			}
+			return $cookie;
 		}
 		else {
 			return null;

@@ -105,8 +105,7 @@ class editorModel
 
     public function updateTemplatesOrder()
     {
-        preg_match_all('/[a-z-]+/i',$_POST['order'], $orders);
-        foreach ($orders[0] as $key => $item){
+        foreach ($_POST as $key => $item) {
             $this->query->updateOne('templates', ['turn' => $key], ['name' => $item] );
         }
     }

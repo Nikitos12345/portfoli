@@ -30,8 +30,6 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
     $r->addRoute(['GET', 'POST'], '/reset-password', ['App\controllers\authController', "resetPassword"]);
     $r->get('/verify-email/{selector}/{token}', ['App\controllers\authController', "VerifyTokenForReset"]);
     $r->post('/update-password', ['App\controllers\authController', "updatePassword"]);
-    $r->get('/show/layout/{layout}/{group}', ['App\controllers\siteControls', "showLayout"]);
-    $r->addRoute('GET', '/test', ['App\controllers\siteControls', "test"]);
     $r->addRoute('GET', '/logout', ['App\controllers\authController', "Logout"]);
 });
 
@@ -46,14 +44,13 @@ $uri = rawurldecode($uri);
 $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
-        echo 'error 404';
-//        $temp = $container->get("League\Plates\Engine");
-//        echo $temp->render('NotFound');
+        $temp = $container->get("League\Plates\Engine");
+        echo $temp->render('NotFound', ['page' => 404]);
         break;
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
         $allowedMethods = $routeInfo[1];
-        echo '405 Method Not Allowed';
-        var_dump($_SERVER);
+        $temp = $container->get("League\Plates\Engine");
+        echo $temp->render('NotFound', ['page' => 405]);
         break;
     case FastRoute\Dispatcher::FOUND:
         $handler = $routeInfo[1];

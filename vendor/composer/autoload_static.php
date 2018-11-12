@@ -8,18 +8,14 @@ class ComposerStaticInite69e4e123b7c7d4e4ddd8e6e086fb25a
 {
     public static $files = array (
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
-        'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
         '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
-        'b33e3d135e5d9e47d845c576147bda89' => __DIR__ . '/..' . '/php-di/php-di/src/functions.php',
+        'bbf73f3db644d3dced353b837903e74c' => __DIR__ . '/..' . '/php-di/php-di/src/DI/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
         'S' => 
         array (
-            'Symfony\\Polyfill\\Util\\' => 22,
-            'Symfony\\Polyfill\\Php56\\' => 23,
             'Symfony\\Component\\Process\\' => 26,
-            'SuperClosure\\' => 13,
             'Spatie\\TemporaryDirectory\\' => 26,
             'Spatie\\Image\\' => 13,
             'Spatie\\ImageOptimizer\\' => 22,
@@ -29,7 +25,6 @@ class ComposerStaticInite69e4e123b7c7d4e4ddd8e6e086fb25a
             'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Container\\' => 14,
-            'PhpParser\\' => 10,
             'PhpDocReader\\' => 13,
         ),
         'L' => 
@@ -42,6 +37,7 @@ class ComposerStaticInite69e4e123b7c7d4e4ddd8e6e086fb25a
         array (
             'Invoker\\' => 8,
             'Intervention\\Image\\' => 19,
+            'Interop\\Container\\' => 18,
         ),
         'G' => 
         array (
@@ -68,21 +64,9 @@ class ComposerStaticInite69e4e123b7c7d4e4ddd8e6e086fb25a
     );
 
     public static $prefixDirsPsr4 = array (
-        'Symfony\\Polyfill\\Util\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-util',
-        ),
-        'Symfony\\Polyfill\\Php56\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-php56',
-        ),
         'Symfony\\Component\\Process\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/process',
-        ),
-        'SuperClosure\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src',
         ),
         'Spatie\\TemporaryDirectory\\' => 
         array (
@@ -108,10 +92,6 @@ class ComposerStaticInite69e4e123b7c7d4e4ddd8e6e086fb25a
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
         ),
-        'PhpParser\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
-        ),
         'PhpDocReader\\' => 
         array (
             0 => __DIR__ . '/..' . '/php-di/phpdoc-reader/src/PhpDocReader',
@@ -135,6 +115,10 @@ class ComposerStaticInite69e4e123b7c7d4e4ddd8e6e086fb25a
         'Intervention\\Image\\' => 
         array (
             0 => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image',
+        ),
+        'Interop\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/container-interop/container-interop/src/Interop/Container',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (
@@ -166,7 +150,7 @@ class ComposerStaticInite69e4e123b7c7d4e4ddd8e6e086fb25a
         ),
         'DI\\' => 
         array (
-            0 => __DIR__ . '/..' . '/php-di/php-di/src',
+            0 => __DIR__ . '/..' . '/php-di/php-di/src/DI',
         ),
         'Aura\\SqlQuery\\' => 
         array (
